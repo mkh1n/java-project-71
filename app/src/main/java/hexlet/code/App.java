@@ -1,11 +1,15 @@
 package hexlet.code;
 
+import com.sun.tools.jconsole.JConsoleContext;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+import java.util.Map;
 import java.util.concurrent.Callable;
+
+import static hexlet.code.DataParser.parseData;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
         description = "Compares two configuration files and shows a difference.")
@@ -24,11 +28,17 @@ public class App implements Callable<Integer> {
         int exitCode = new CommandLine(new App()).setUsageHelpAutoWidth(true).execute(args);
         System.exit(exitCode);
     }
-
+    public static Map getContent(String path) throws Exception {
+        return parseData(path);
+    }
     @Override
     public Integer call() throws Exception {
-        // Ваш код здесь
-        System.out.println("Hello and welcome!");
+        System.out.println(getContent(filepath1));
+        System.out.println(getContent(filepath2));
+
         return 0;
     }
+
+
+
 }
