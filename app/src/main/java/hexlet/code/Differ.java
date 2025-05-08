@@ -1,11 +1,7 @@
 package hexlet.code;
 
-import java.sql.PreparedStatement;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toSet;
-import static java.util.stream.Stream.concat;
 
 public class Differ {
     public static List<Map<String, Object>> generateDiffObject(Map file1Data, Map file2Data) {
@@ -19,7 +15,7 @@ public class Differ {
                 var value1 = file1Data.get(key);
                 var value2 = file2Data.get(key);
 
-                if (file1Data.get(key).equals(file2Data.get(key))){
+                if (value1.equals(value2)){
                     resultEntry.put("key", key);
                     resultEntry.put("value", value1);
                     resultEntry.put("status", "unchanged");
