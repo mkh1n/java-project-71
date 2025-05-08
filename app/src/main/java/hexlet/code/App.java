@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import com.sun.tools.jconsole.JConsoleContext;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -10,6 +9,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import static hexlet.code.DataParser.parseData;
+import static hexlet.code.Differ.generateDiffObject;
+import static hexlet.code.formatters.Stylish.stylishFormat;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
         description = "Compares two configuration files and shows a difference.")
@@ -33,9 +34,11 @@ public class App implements Callable<Integer> {
     }
     @Override
     public Integer call() throws Exception {
-        System.out.println(getContent(filepath1));
-        System.out.println(getContent(filepath2));
-
+        var content1 = getContent(filepath1);
+        var content2 = getContent(filepath2);
+        var differObject = generateDiffObject(content1, content2);
+        System.out.println(differObject);
+        System.out.println(stylishFormat(differObject));
         return 0;
     }
 
